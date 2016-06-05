@@ -34,7 +34,7 @@ def process_message(request):
 
 def send_simple_message(recipient_email_id, subject):
     return requests.post(
-        "https://api.mailgun.net/v3/sandboxaeedb52bbc344d3db562ce0ddc5fb584.mailgun.org/messages",
+        "https://api.mailgun.net/v3/api.billwise.co/messages",
         auth=("api", "key-ae6af4f4c6a04a3f48fa506094189246"),
         # data={"from": "Billwise postmaster@sandboxaeedb52bbc344d3db562ce0ddc5fb584.mailgun.org",
         data={"from": "Billwise super-smart-ai@api.billwise.co",      
