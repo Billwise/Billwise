@@ -55,7 +55,14 @@ def get_bills(driver):
 def get_bill_with_credentials(username, password):
 	driver = get_firefox_driver()
 	login_with_credentials(driver, username, password)
-	return get_bills(driver)
+	try:
+		return add_error_and_data_keys(get_bills(driver))
+	except IndexError:
+		driver.quit()
+		return {
+			'error': True,
+			'data': None,
+		}
 
 def add_error_and_data_keys(dict):
 	new_dict = {}
@@ -70,7 +77,6 @@ def get_bill(request):
 	if (not username) or (not password):
 		return HttpResponseBadRequest()
 	bill_amounts_dict = get_bill_with_credentials(username, password)
-	json_response_dict = add_error_and_data_keys(bill_amounts_dict)
-	return JsonResponse(json_response_dict)
+	return JsonResponse(bill_amounts_dict)
 	
 
