@@ -57,6 +57,12 @@ def get_bill_with_credentials(username, password):
 	login_with_credentials(driver, username, password)
 	return get_bills(driver)
 
+def add_error_and_data_keys(dict):
+	new_dict = {}
+	new_dict['error'] = False
+	new_dict['data'] = dict
+	return new_dict
+
 @require_http_methods(["GET"])
 def get_bill(request):
 	username = request.GET.get('username', None)
@@ -64,6 +70,7 @@ def get_bill(request):
 	if (not username) or (not password):
 		return HttpResponseBadRequest()
 	bill_amounts_dict = get_bill_with_credentials(username, password)
-	return JsonResponse(bill_amounts_dict)
+	json_response_dict = add_error_and_data_keys(bill_amounts_dict)
+	return JsonResponse(json_response_dict)
 	
 
