@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^message/', include('email_parser.urls')),
     url(r'^services/sp/', include('sp_services.urls')),
+    url(r'^services/starhub/', include('starhub.urls')),
 ]

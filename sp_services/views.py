@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import pprint
 import re
 import json
+import random
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -70,13 +71,29 @@ def add_error_and_data_keys(dict):
 	new_dict['data'] = dict
 	return new_dict
 
+def are_test_credentials_passed(username, password):
+	return (username == 'test') and (password == 'test')
+
+def get_random_bill_amount():
+	rounded_number = round(random.uniform(0, 101), 2)
+	return rounded_number
+
+def get_random_bill_amount_dict():
+	return {
+		'error': False,
+		'data': get_random_bill_amount()
+	}
+
 @require_http_methods(["GET"])
 def get_bill(request):
 	username = request.GET.get('username', None)
 	password = request.GET.get('password', None)
 	if (not username) or (not password):
 		return HttpResponseBadRequest()
-	bill_amounts_dict = get_bill_with_credentials(username, password)
-	return JsonResponse(bill_amounts_dict)
+	elif are_test_credentials_passed(username, password):
+		return JsonResponse(get_random_bill_amount_dict())
+	else:
+		bill_amounts_dict = get_bill_with_credentials(username, password)
+		return JsonResponse(bill_amounts_dict)
 	
 
