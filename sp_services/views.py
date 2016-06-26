@@ -10,6 +10,7 @@ import pprint
 import re
 import json
 import random
+import sys
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -58,7 +59,9 @@ def get_bill_with_credentials(username, password):
 	login_with_credentials(driver, username, password)
 	try:
 		return add_error_and_data_keys(get_bills(driver))
-	except IndexError:
+	except:
+		e = sys.exc_info()
+		pp.pprint(e)
 		driver.quit()
 		return {
 			'error': True,
