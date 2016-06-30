@@ -10,17 +10,20 @@ from selenium.webdriver.common.by import By
 import json
 import random
 import sys
+from common import utils
+from django.views.decorators.http import require_http_methods
 
 pp = pprint.PrettyPrinter(indent=4)
 
 # Create your views here.
+@require_http_methods(["GET"])
 def get_bill(request):
 	username = request.GET.get('username', None)
 	password = request.GET.get('password', None)
 	if (not username) or (not password):
 		return HttpResponseBadRequest()
-	elif are_test_credentials_passed(username, password):
-		return JsonResponse(get_random_bill_amount_dict())
+	elif utils.are_test_credentials_passed(username, password):
+		return utils.get_response_for_test_credentials()
 	else:
 		bill_amounts_dict = get_bill_with_credentials(username, password)
 		return JsonResponse(bill_amounts_dict)

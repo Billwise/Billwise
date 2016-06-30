@@ -11,6 +11,7 @@ import re
 import json
 import random
 import sys
+from common import utils
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -93,8 +94,8 @@ def get_bill(request):
 	password = request.GET.get('password', None)
 	if (not username) or (not password):
 		return HttpResponseBadRequest()
-	elif are_test_credentials_passed(username, password):
-		return JsonResponse(get_random_bill_amount_dict())
+	elif utils.are_test_credentials_passed(username, password):
+		return utils.get_response_for_test_credentials()
 	else:
 		bill_amounts_dict = get_bill_with_credentials(username, password)
 		return JsonResponse(bill_amounts_dict)

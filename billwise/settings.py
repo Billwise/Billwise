@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'email_parser',
     'sp_services',
     'starhub',
+    'singtel',
+    'common',
 ]
 
 TEMPLATES = [

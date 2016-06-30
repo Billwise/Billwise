@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^message/', include('email_parser.urls')),
     url(r'^services/sp/', include('sp_services.urls')),
     url(r'^services/starhub/', include('starhub.urls')),
+    url(r'^services/singtel/', include('singtel.urls')),
 ]
